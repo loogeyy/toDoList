@@ -38,6 +38,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <segue destination="qYC-UH-LJn" kind="show" identifier="moveToComplete" id="4R3-JW-kRH"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vby-tH-MBD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -97,20 +100,41 @@
             </objects>
             <point key="canvasLocation" x="1653.6231884057972" y="722.54464285714278"/>
         </scene>
-        <!--View Controller-->
+        <!--Complete To Do View Controller-->
         <scene sceneID="4cW-2r-zmW">
             <objects>
-                <viewController id="qYC-UH-LJn" sceneMemberID="viewController">
+                <viewController id="qYC-UH-LJn" customClass="CompleteToDoViewController" customModule="toDoList" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="TON-qI-iiq">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Name of ToDo will go here" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1K4-5S-Ul6">
+                                <rect key="frame" x="107" y="184" width="200" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="glV-9X-pWy">
+                                <rect key="frame" x="111" y="412" width="193" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Mark this ToDo as Complete"/>
+                                <connections>
+                                    <action selector="completeTapped:" destination="qYC-UH-LJn" eventType="touchUpInside" id="dUq-aJ-p9Q"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="npe-Pa-NBq"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
+                    <navigationItem key="navigationItem" id="hiu-kC-mf5"/>
+                    <connections>
+                        <outlet property="titleLabel" destination="1K4-5S-Ul6" id="QTd-Tn-ZKt"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ggz-DC-naM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="939" y="1390"/>
+            <point key="canvasLocation" x="939" y="1470"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="RU1-Fd-t4b">

@@ -15,6 +15,7 @@ class ToDoTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         toDos=createToDos()
+        //toDos list is initally set to elements specified in createToDos function (learn swift and walk dog)
     }
     
     func createToDos()->[ToDo]{
@@ -40,7 +41,7 @@ class ToDoTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-        let toDo=toDos[indexPath.row]
+        let toDo=toDos[indexPath.row] //each row is a separate toDo task
         // Configure the cell...
         if toDo.important{
             cell.textLabel?.text = "❗️" + toDo.name
@@ -51,10 +52,27 @@ class ToDoTableViewController: UITableViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) { //prepares for segue
+        
+        //defines new addVC variable that indicates segue destination as the add to-do list screen
         if let addVC = segue.destination as? AddToDoViewController {
            addVC.previousVC = self
          }
         
+        //defines new completeVC variable that indicates segue destination as the complete to-do list screen
+        if let completeVC = segue.destination as? CompleteToDoViewController{
+            if let toDo=sender as? ToDo{
+                completeVC.selectedToDo = toDo
+                completeVC.previousVC=self
+            }
+        }
+        
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        //this gives us a single ToDo
+        let toDo=toDos[indexPath.row]
+        
+        performSegue(withIdentifier: "moveToComplete", sender: toDo)
     }
     /*
     */
