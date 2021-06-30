@@ -9,15 +9,16 @@ import UIKit
 
 class ToDoTableViewController: UITableViewController {
 
-    var toDos:[ToDo]=[] //intializing var toDos that is a ToDo class object
+    //var toDos:[ToDo]=[] //intializing var toDos that is a ToDo class object
+    var toDos : [ToDoCD] = [] // new initialization with core data
     
-
     override func viewDidLoad() {
         super.viewDidLoad()
-        toDos=createToDos()
+        //toDos=createToDos()
+        
         //toDos list is initally set to elements specified in createToDos function (learn swift and walk dog)
     }
-    
+    /* replaced w core data function
     func createToDos()->[ToDo]{
     //function that returns new ToDo object from the class in ToDo.swift
             let swift=ToDo()
@@ -30,9 +31,20 @@ class ToDoTableViewController: UITableViewController {
             
             return[swift,dog]
         }
+*/
+    func getToDos(){
+        if let context = (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer.viewContext {
+            if let coreDataToDos = try? context.fetch(ToDoCD.fetchRequest()) as? [ToDoCD] {
+                    toDos = coreDataToDos
+                    tableView.reloadData()
+                }
+        }
+    }
 
-
-
+    override func viewWillAppear(_ animated: Bool) {
+      getToDos()
+    }
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return toDos.count
@@ -43,11 +55,13 @@ class ToDoTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
         let toDo=toDos[indexPath.row] //each row is a separate toDo task
         // Configure the cell...
-        if toDo.important{
-            cell.textLabel?.text = "❗️" + toDo.name
-              } else {
+        if let name = toDo.name {
+            if toDo.important {
+                cell.textLabel?.text = "❗️" + name
+            } else {
                 cell.textLabel?.text = toDo.name
-              }
+            }
+          }
         return cell
     }
     
@@ -60,7 +74,7 @@ class ToDoTableViewController: UITableViewController {
         
         //defines new completeVC variable that indicates segue destination as the complete to-do list screen
         if let completeVC = segue.destination as? CompleteToDoViewController{
-            if let toDo=sender as? ToDo{
+            if let toDo=sender as? ToDoCD{
                 completeVC.selectedToDo = toDo
                 completeVC.previousVC=self
             }
